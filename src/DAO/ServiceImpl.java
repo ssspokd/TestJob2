@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import testjob.OperationEnum;
+import util.Config;
 import static util.DAO.getSession;
 
 
@@ -77,5 +79,59 @@ public class ServiceImpl extends AbstractObjectDB<Service>
         } catch (SQLException ex) {
             Logger.getLogger(ServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    /**
+     * show services
+     * @param commandSplit 
+     */
+    public void showServices(String[] commandSplit) {
+         if(commandSplit.length > Config.COUNT_PARAM_SHOW_SERVICES){
+                     System.err.println(Config.COMMAND_HAS_NO_PARAMETR);    
+                     System.out.println(Config.SHOW_SERVISES_EXAMPLE);
+        }
+         else{
+             printScreen();
+         }
+    }
+    
+    /***
+     * add service
+     * @param str[]
+     * @throws SQLException 
+     */
+    public void addService(String[] str) throws SQLException{
+        
+        if(!Config.validateForCountParametr(str, 1)){
+                   Config.printErrorBadCountParam(Config.COUNT_PARAM_COMMAND_ADD_SERVICE);   
+                   System.out.println(Config.ADD_SERVICE_EXAMPLE);
+        }      
+        else if(!Config.validateParam(str[2].trim())){
+            System.err.println("bad parametr operation");
+        }
+        else if(str[2].trim().equals(OperationEnum.average.toString())){
+            float averageValue  = 0;
+            try{
+                for(int i = Config.START_INDEX_PARAM_COM_ADD_SERVICE; i< str.length;i++){
+                    if(str[i].length() != 0){
+                        averageValue  = averageValue + Float.valueOf(str[i].trim());
+                    }
+                }
+                averageValue = averageValue/(str.length - 
+                        Config.START_INDEX_PARAM_COM_ADD_SERVICE);
+                ServiceImpl.getInstance().insertClient(str[2].trim(), str[1].trim(), averageValue);
+            }
+            catch(Exception e){System.err.println(e.getMessage());}          
+        }
+        else{
+            if(Config.validateForCountParametr(str, Config.COUNT_PARAM_COMMAND_ADD_SERVICE)){
+                   Config.printErrorBadCountParam(Config.COUNT_PARAM_COMMAND_ADD_SERVICE);   
+                   System.err.println(Config.ADD_SERVICE_EXAMPLE);
+            }
+            else            
+            {
+                insertClient(str[2].trim(), str[1].trim(), Float.valueOf(str[3]));
+            }
+        }   
     }
 }

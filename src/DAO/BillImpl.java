@@ -6,13 +6,20 @@
 package DAO;
 
 import DAO.Entity.BillClient;
+import DAO.Entity.Client;
 import DAO.Interfaces.AbstractObjectDB;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import testjob.OperationEnum;
 import static util.DAO.getSession;
 import org.hibernate.Session;
+import testjob.TestJob;
+import util.Config;
 
 
 
@@ -83,5 +90,66 @@ public class BillImpl extends AbstractObjectDB<BillClient>
             System.err.println(e.getMessage());
         }
         return result;
+    }
+    
+    /***
+     * 
+     * @param str
+     * @throws SQLException 
+     */
+    public void showBill(String[] str) throws SQLException{
+        if(Config.validateForCountParametr(str, Config.COUNT_PARAM_BILL_CLIENT)){
+                   Config.printErrorBadCountParam(Config.COUNT_PARAM_BILL_CLIENT);                   
+        }       
+        else{
+            Client client =   ClientImpl.getInstance().getObjectByName(str[1]);
+            if(client == null){
+                System.err.println("Client  not finde");
+                return;
+            }
+            List list = BillImpl.getInstance().showAllBillForClient(client.getId());        
+            if(list.isEmpty()){
+                System.err.println("not bill for client " + client.getClientName());
+            }
+            else{
+                System.out.println("count bill: " + list.size());  
+                Config.printFormListIterator(list);
+            }
+            
+        }     
+    }
+    
+     /***
+     * 
+     * @param str 
+     */
+    public void billClient(String[] str){
+        if(Config.validateForCountParametr(str, Config.COUNT_PARAM_BILL_CLIENT)){
+            Config.printErrorBadCountParam(Config.COUNT_PARAM_BILL_CLIENT);       
+            System.out.println(Config.BILL_EXAMPLE);
+            
+        }  
+        else{
+            try {
+                Client client = ClientImpl.getInstance().getObjectByName(str[1]);
+                if(client == null){
+                    System.err.println("Client not find");
+                }
+                else{
+                    float ammount = BillImpl.getInstance().calculatedBill(client.getId());
+                    BillImpl.getInstance().calculatedBill(client.getId());
+                    BillClient  billClient =  new BillClient();
+                    billClient.setClient(client);
+                    billClient.setDateBill(new Date());
+                    billClient.setBillAmount(ammount);
+                    System.out.println("Amount for " + client.getClientName() + " " + ammount);
+                    BillImpl.getInstance().insert(billClient);
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TestJob.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+                
+        }
     }
 }

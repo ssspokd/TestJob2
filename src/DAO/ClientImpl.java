@@ -64,4 +64,38 @@ public class ClientImpl extends AbstractObjectDB<Client>
         }
         return object;
     }
+    
+    /**
+     * show all clients
+     * @param str 
+     */
+    public void showClients(String[] str){
+        if(str.length  > Config.COUNT_PARAM_SHOW_CLIENT){
+            System.err.println(Config.COMMAND_HAS_NO_PARAMETR);              
+        }
+        else{
+            printScreen();
+        }
+    }
+    
+    /***
+     * add client
+     * @param name Name client
+     * @throws SQLException 
+     */
+    public void addClient(String[] str) throws SQLException{
+        if(Config.validateForCountParametr(str, Config.COUNT_PARAM_COMMAND_ADD_CLIENT))
+        {
+                   Config.printErrorBadCountParam(Config.COUNT_PARAM_COMMAND_ADD_CLIENT);    
+                   System.out.println(Config.ADD_CLIENT_EXAMPLE);
+                   
+        }       
+        else{
+                String nameClient = str[1];
+                Client client = new Client();
+                client.setClientName(nameClient);
+                insert(client);
+                System.out.println("Defined client " + str[1]);  
+        }         
+    }
 }

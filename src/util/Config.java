@@ -3,6 +3,7 @@ package util;
 import java.util.List;
 import java.util.ListIterator;
 import testjob.CommandEnum;
+import testjob.OperationEnum;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -114,5 +115,16 @@ public class Config {
             }
     }
     
+    
+    /***
+     * validate param
+     * @param param
+     * @return 
+     */
+    public static boolean validateParam(String param){
+        return(param.equals(OperationEnum.average.toString()) ||
+                param.equals(OperationEnum.constant.toString()) ||
+                param.equals(OperationEnum.multiply.toString()));
+    }
     
 }
