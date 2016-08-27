@@ -28,6 +28,7 @@ public class Config {
     public  static final int COUNT_PARAM_HELP = 2;
     public  static final int COUNT_PARAM_SHOW_CLIENT = 1;
     public  static final int COUNT_PARAM_SHOW_SERVICES = 1;
+    public  static final int START_INDEX_PARAM_COM_ADD_SERVICE = 3;
     
     
     

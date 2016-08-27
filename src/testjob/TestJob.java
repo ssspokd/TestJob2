@@ -187,12 +187,13 @@ public class TestJob {
         else if(str[2].trim().equals(OperationEnum.average.toString())){
             float averageValue  = 0;
             try{
-                for(int i = 3; i< str.length;i++){
+                for(int i = Config.START_INDEX_PARAM_COM_ADD_SERVICE; i< str.length;i++){
                     if(str[i].length() != 0){
                         averageValue  = averageValue + Float.valueOf(str[i].trim());
                     }
                 }
-                averageValue = averageValue/3;
+                averageValue = averageValue/(str.length - 
+                        Config.START_INDEX_PARAM_COM_ADD_SERVICE);
                 ServiceImpl.getInstance().insertClient(str[2].trim(), str[1].trim(), averageValue);
             }
             catch(Exception e){System.err.println(e.getMessage());}          
