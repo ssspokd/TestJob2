@@ -105,7 +105,7 @@ public class BillImpl extends AbstractObjectDB<BillClient>
      * @param str
      * @throws SQLException 
      */
-    public void showBill(String[] str) throws SQLException{
+    public void showBillForClient(String[] str) throws SQLException{
         if(Config.validateForCountParametr(str, Config.COUNT_PARAM_BILL_CLIENT)){
                    Config.printErrorBadCountParam(Config.COUNT_PARAM_BILL_CLIENT);                   
         }       

@@ -10,18 +10,11 @@ import DAO.BillImpl;
 import DAO.ClientImpl;
 import DAO.ClientServiceImpl;
 import DAO.ConsumptionImpl;
-import DAO.Entity.BillClient;
-import DAO.Entity.Client;
-import DAO.Entity.ClientService;
-import DAO.Entity.Consumption;
-import DAO.Entity.Service;
 import DAO.ServiceImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import util.Config;
@@ -77,7 +70,7 @@ public class TestJob {
             }
             //show bill client
             else if(strCommand.equals(CommandEnum.show_bill.toString())){
-                BillImpl.getInstance().showBill(commandSplit);
+                BillImpl.getInstance().showBillForClient(commandSplit);
             }
             //show help
             else if(strCommand.equals(CommandEnum.help.toString())){
