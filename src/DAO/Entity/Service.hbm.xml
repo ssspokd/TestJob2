@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26.08.2016 15:13:23 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="DAO.Entity.Service" table="SERVICE" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="increment" />
+        </id>
+        <property name="serviceName" type="string">
+            <column name="SERVICE_NAME" length="25" not-null="true" unique="true" />
+        </property>
+        <property name="operation" type="string">
+            <column name="OPERATION" length="10" not-null="true" />
+        </property>
+        <property name="parametr" type="double">
+            <column name="PARAMETR" precision="7" scale="0" not-null="true" />
+        </property>
+        <set name="clientServices" table="CLIENT_SERVICE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_SERVICE" not-null="true" />
+            </key>
+            <one-to-many class="DAO.Entity.ClientService" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26.08.2016 15:13:23 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="DAO.Entity.ClientService" table="CLIENT_SERVICE" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="client" class="DAO.Entity.Client" fetch="select">
+            <column name="ID_CLIENT" not-null="true" />
+        </many-to-one>
+        <many-to-one name="service" class="DAO.Entity.Service" fetch="select">
+            <column name="ID_SERVICE" not-null="true" />
+        </many-to-one>
+        <set name="consumptions" table="CONSUMPTION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_CLIENT_SERVICE" not-null="true" />
+            </key>
+            <one-to-many class="DAO.Entity.Consumption" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.FirebirdDialect</property>
+    <property name="hibernate.connection.driver_class">org.firebirdsql.jdbc.FBDriver</property>
+    <property name="hibernate.connection.url">jdbc:firebirdsql:127.0.0.1/3050:test2?lc_ctype=WIN1251</property>
+    <property name="hibernate.connection.username">SYSDBA</property>
+    <property name="hibernate.connection.password">masterkey</property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+    <property name="hibernate.connection.pool_size">10</property>
+    <property name="hibernate.transaction.auto_close_session">true</property>
+    <property name="hibernate.connection.autocommit">true</property>
+    <mapping resource="DAO/Entity/ClientService.hbm.xml"/>
+    <mapping resource="DAO/Entity/Consumption.hbm.xml"/>
+    <mapping resource="DAO/Entity/BillClient.hbm.xml"/>
+    <mapping resource="DAO/Entity/Service.hbm.xml"/>
+    <mapping resource="DAO/Entity/Client.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
