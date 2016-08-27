@@ -34,7 +34,6 @@ public class TestJob {
 
     public TestJob() {
     }
-    
 
     public void run() throws SQLException {
         String[] commandSplit;
@@ -74,7 +73,7 @@ public class TestJob {
             //bill for client
             else if(strCommand.equals(CommandEnum.bill.toString()))
             {
-                BillImpl.getInstance().billClient(commandSplit);
+                BillImpl.getInstance().addBillClient(commandSplit);
             }
             //show bill client
             else if(strCommand.equals(CommandEnum.show_bill.toString())){

@@ -39,7 +39,7 @@ public class ConsumptionImpl extends AbstractObjectDB<Consumption>
     }
     
     /***
-     * 
+     * add Consumption
      * @param str 
      */
     public void addConsumption(String[] str){
@@ -50,8 +50,8 @@ public class ConsumptionImpl extends AbstractObjectDB<Consumption>
         }       
         else{
             try {
-                Client client = ClientImpl.getInstance().getObjectByName(str[1]);
-                Service service = ServiceImpl.getInstance().getObjectByName(str[2]);
+                Client client = ClientImpl.getInstance().getClienttByName(str[1]);
+                Service service = ServiceImpl.getInstance().getServiceByName(str[2]);
                 if(client == null || service == null){
                     System.err.println("Client or service not finde");
                     return;
@@ -61,7 +61,7 @@ public class ConsumptionImpl extends AbstractObjectDB<Consumption>
                             + "when calculating the value will not be considered");
                 }
                 ClientService clientService =  ClientServiceImpl.getInstance()
-                        .getObject(client.getId(), service.getId());
+                        .getClientService(client.getId(), service.getId());
                 if(clientService == null){
                     System.err.println("not find service for this is client");
                 }  
@@ -69,7 +69,7 @@ public class ConsumptionImpl extends AbstractObjectDB<Consumption>
                        Consumption  consumption =  new Consumption();
                        consumption.setValuesConsumption(Integer.valueOf(str[3]));
                        consumption.setClientService(clientService);
-                       ConsumptionImpl.getInstance().insert(consumption);
+                       insert(consumption);
                        System.out.println("Added consumption " + Integer.valueOf(str[3])+ "  by service " +
                                service.getServiceName() + " to " + client.getClientName());
                 }              

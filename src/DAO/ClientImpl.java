@@ -33,8 +33,10 @@ public class ClientImpl extends AbstractObjectDB<Client>
         return instance;
     }
    
-    
-    public void printScreen(){
+    /**
+     * show client, query
+     */
+    public void getClientQuery(){
         List list = null;
         Session session = getSession();    
 	try {
@@ -53,7 +55,13 @@ public class ClientImpl extends AbstractObjectDB<Client>
         }              
     }
     
-    public Client getObjectByName(String nameClient) throws SQLException {
+    /**
+     * get object Client from name client
+     * @param nameClient
+     * @return
+     * @throws SQLException 
+     */
+    public Client getClienttByName(String nameClient) throws SQLException {
         Client object = new Client();
         try {
             Query categoryQuery = getSession().createQuery(
@@ -74,7 +82,7 @@ public class ClientImpl extends AbstractObjectDB<Client>
             System.err.println(Config.COMMAND_HAS_NO_PARAMETR);              
         }
         else{
-            printScreen();
+            getClientQuery();
         }
     }
     
@@ -87,8 +95,7 @@ public class ClientImpl extends AbstractObjectDB<Client>
         if(Config.validateForCountParametr(str, Config.COUNT_PARAM_COMMAND_ADD_CLIENT))
         {
                    Config.printErrorBadCountParam(Config.COUNT_PARAM_COMMAND_ADD_CLIENT);    
-                   System.out.println(Config.ADD_CLIENT_EXAMPLE);
-                   
+                   System.out.println(Config.ADD_CLIENT_EXAMPLE);                  
         }       
         else{
                 String nameClient = str[1];

@@ -42,7 +42,11 @@ public class BillImpl extends AbstractObjectDB<BillClient>
         return instance;
     }
 
-    
+    /**
+     * show bill for client, query
+     * @param idClient
+     * @return 
+     */
     public List showAllBillForClient(int idClient){
         List list;
         list = new LinkedList<>();
@@ -60,7 +64,11 @@ public class BillImpl extends AbstractObjectDB<BillClient>
     }
  
     
-    
+    /**
+     * calculated bill
+     * @param idClient
+     * @return 
+     */
     public float calculatedBill(int idClient){
         float result = 0;
         Session session = getSession();
@@ -102,12 +110,12 @@ public class BillImpl extends AbstractObjectDB<BillClient>
                    Config.printErrorBadCountParam(Config.COUNT_PARAM_BILL_CLIENT);                   
         }       
         else{
-            Client client =   ClientImpl.getInstance().getObjectByName(str[1]);
+            Client client =   ClientImpl.getInstance().getClienttByName(str[1]);
             if(client == null){
                 System.err.println("Client  not finde");
                 return;
             }
-            List list = BillImpl.getInstance().showAllBillForClient(client.getId());        
+            List list = showAllBillForClient(client.getId());        
             if(list.isEmpty()){
                 System.err.println("not bill for client " + client.getClientName());
             }
@@ -123,28 +131,26 @@ public class BillImpl extends AbstractObjectDB<BillClient>
      * 
      * @param str 
      */
-    public void billClient(String[] str){
+    public void addBillClient(String[] str){
         if(Config.validateForCountParametr(str, Config.COUNT_PARAM_BILL_CLIENT)){
             Config.printErrorBadCountParam(Config.COUNT_PARAM_BILL_CLIENT);       
-            System.out.println(Config.BILL_EXAMPLE);
-            
+            System.out.println(Config.BILL_EXAMPLE);            
         }  
         else{
             try {
-                Client client = ClientImpl.getInstance().getObjectByName(str[1]);
+                Client client = ClientImpl.getInstance().getClienttByName(str[1]);
                 if(client == null){
                     System.err.println("Client not find");
                 }
                 else{
                     float ammount = BillImpl.getInstance().calculatedBill(client.getId());
-                    BillImpl.getInstance().calculatedBill(client.getId());
+                    calculatedBill(client.getId());
                     BillClient  billClient =  new BillClient();
                     billClient.setClient(client);
                     billClient.setDateBill(new Date());
                     billClient.setBillAmount(ammount);
                     System.out.println("Amount for " + client.getClientName() + " " + ammount);
-                    BillImpl.getInstance().insert(billClient);
-                    
+                    BillImpl.getInstance().insert(billClient);                 
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TestJob.class.getName()).log(Level.SEVERE, null, ex);

@@ -39,8 +39,10 @@ public class ServiceImpl extends AbstractObjectDB<Service>
         return instance;
     }
 
-    
-    public void printScreen(){
+    /**
+     * show service 
+     */
+    public void getAllServiceQuery(){
         List<Service> list   = new LinkedList<>();
         Session session = getSession();
 	try {
@@ -55,7 +57,13 @@ public class ServiceImpl extends AbstractObjectDB<Service>
             System.err.println(e.getMessage());
         }              
     }
-    public Service getObjectByName(String nameService) throws SQLException {
+    /**
+     * get service by name
+     * @param nameService
+     * @return
+     * @throws SQLException 
+     */
+    public Service getServiceByName(String nameService) throws SQLException {
         Service object = null;
         try {
             Query categoryQuery = getSession().createQuery(
@@ -67,7 +75,13 @@ public class ServiceImpl extends AbstractObjectDB<Service>
         return object;
     }
     
-    public  void insertClient(String operation, String serviceName,float value ){
+    /**
+     * add client
+     * @param operation
+     * @param serviceName
+     * @param value 
+     */
+    public  void addClient(String operation, String serviceName,float value ){
         Service  service =  new Service();
         service.setOperation(operation);
         service.setServiceName(serviceName);
@@ -91,7 +105,7 @@ public class ServiceImpl extends AbstractObjectDB<Service>
                      System.out.println(Config.SHOW_SERVISES_EXAMPLE);
         }
          else{
-             printScreen();
+             getAllServiceQuery();
          }
     }
     
@@ -119,7 +133,7 @@ public class ServiceImpl extends AbstractObjectDB<Service>
                 }
                 averageValue = averageValue/(str.length - 
                         Config.START_INDEX_PARAM_COM_ADD_SERVICE);
-                ServiceImpl.getInstance().insertClient(str[2].trim(), str[1].trim(), averageValue);
+                ServiceImpl.getInstance().addClient(str[2].trim(), str[1].trim(), averageValue);
             }
             catch(Exception e){System.err.println(e.getMessage());}          
         }
@@ -130,7 +144,7 @@ public class ServiceImpl extends AbstractObjectDB<Service>
             }
             else            
             {
-                insertClient(str[2].trim(), str[1].trim(), Float.valueOf(str[3]));
+                addClient(str[2].trim(), str[1].trim(), Float.valueOf(str[3]));
             }
         }   
     }

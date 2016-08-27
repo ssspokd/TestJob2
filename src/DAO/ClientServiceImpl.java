@@ -35,7 +35,15 @@ public class ClientServiceImpl extends AbstractObjectDB<ClientService>
         }
         return instance;
     }
-    public ClientService getObject(int idClient,int idService) throws SQLException {
+    
+    /***
+     * 
+     * @param idClient
+     * @param idService
+     * @return
+     * @throws SQLException 
+     */
+    public ClientService getClientService(int idClient,int idService) throws SQLException {
         ClientService object = null;
         try {
             Query categoryQuery = getSession().createQuery(
@@ -59,25 +67,22 @@ public class ClientServiceImpl extends AbstractObjectDB<ClientService>
         }       
         else{
             try {
-                Client client =   ClientImpl.getInstance().getObjectByName(str[1]);
-                Service service = ServiceImpl.getInstance().getObjectByName(str[2]);
+                Client client =   ClientImpl.getInstance().getClienttByName(str[1]);
+                Service service = ServiceImpl.getInstance().getServiceByName(str[2]);
                 if(client == null || service == null){
-                    System.err.println("Client or service not finde");
-                    
+                    System.err.println("Client or service not finde");                  
                 }
-                else if((ClientServiceImpl.getInstance().getObject(client.getId(), service.getId())) != null){
+                else if((getClientService(client.getId(), service.getId())) != null){
                     System.err.println("This service is added to the client");
                 }
                 else{
                     ClientService cs =  new ClientService();
                     cs.setService(service);
                     cs.setClient(client);
-                    ClientServiceImpl.getInstance().insert(cs);
-                    
+                    insert(cs);                    
                     System.out.println("Added service " + service.getServiceName() +
                     " to " + client.getClientName());
-                }
-                
+                }               
             } catch (SQLException ex) {
                 Logger.getLogger(TestJob.class.getName()).log(Level.SEVERE, null, ex);
             }
